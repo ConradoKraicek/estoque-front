@@ -1,1 +1,46 @@
-<router-outlet />
+<div class="app-container">
+  <header class="app-header" *ngIf="showHeader">
+    <div class="header-content">
+      <div class="brand">
+        <mat-icon class="brand-icon">inventory</mat-icon>
+        <h1 class="brand-title">Controle de Estoque</h1>
+      </div>
+
+      <nav class="main-nav">
+        <a mat-button routerLink="/produtos" routerLinkActive="active">
+          <mat-icon>inventory_2</mat-icon>
+          Produtos
+        </a>
+        <a mat-button routerLink="/relatorio" routerLinkActive="active">
+          <mat-icon>assessment</mat-icon>
+          Relatórios
+        </a>
+      </nav>
+
+      <div class="user-menu">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            Perfil
+          </button>
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            Configurações
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Sair
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <router-outlet />
+  </main>
+</div>

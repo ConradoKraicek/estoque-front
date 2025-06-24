@@ -1,0 +1,165 @@
+<div class="container">
+  <div class="header">
+    <h2>Relatório de Estoque</h2>
+    <div class="actions">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filtrar por Filial</mat-label>
+        <mat-select
+          [(value)]="filialSelecionada"
+          (selectionChange)="onFilialChange()"
+        >
+          <mat-option [value]="null">Todas as Filiais</mat-option>
+          <mat-option *ngFor="let filial of filiais" [value]="filial.id">
+            {{ filial.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        class="action-button"
+        (click)="exportarExcel()"
+        [disabled]="isLoading"
+      >
+        <mat-icon>description</mat-icon>
+        Exportar Excel
+      </button>
+
+      <button
+        mat-stroked-button
+        color="accent"
+        class="action-button"
+        (click)="exportarPdf()"
+        [disabled]="isLoading"
+      >
+        <mat-icon>picture_as_pdf</mat-icon>
+        Exportar PDF
+      </button>
+
+      <button
+        mat-stroked-button
+        color="warn"
+        class="action-button"
+        (click)="cancelar()"
+      >
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando relatório...</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && estoques && estoques.length > 0"
+    class="table-container"
+  >
+    <table mat-table [dataSource]="estoques" class="relatorio-table">
+      <!-- Coluna Produto -->
+      <ng-container matColumnDef="produto">
+        <th mat-header-cell *matHeaderCellDef>Produto</th>
+        <td mat-cell *matCellDef="let estoque">
+          <div class="produto-info">
+            <div class="produto-avatar">
+              <mat-icon>inventory</mat-icon>
+            </div>
+            <span class="produto-nome">{{ estoque.produtoNome }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Coluna Filial -->
+      <ng-container matColumnDef="filial">
+        <th mat-header-cell *matHeaderCellDef>Filial</th>
+        <td mat-cell *matCellDef="let estoque" class="filial-cell">
+          {{ estoque.filialNome }}
+        </td>
+      </ng-container>
+
+      <!-- Coluna Quantidade -->
+      <ng-container matColumnDef="quantidade">
+        <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+        <td mat-cell *matCellDef="let estoque" class="quantidade-cell">
+          <span [class]="getStatusClass(estoque)">{{
+            estoque.quantidade
+          }}</span>
+        </td>
+      </ng-container>
+
+      <!-- Coluna Estoque Mínimo -->
+      <ng-container matColumnDef="estoqueMinimo">
+        <th mat-header-cell *matHeaderCellDef>Estoque Mínimo</th>
+        <td mat-cell *matCellDef="let estoque">
+          {{ estoque.estoqueMinimo }}
+        </td>
+      </ng-container>
+
+      <!-- Coluna Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let estoque">
+          <span [class]="'status-chip ' + getStatusClass(estoque)">
+            {{ getStatusEstoque(estoque) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Coluna Data de Atualização -->
+      <ng-container matColumnDef="dataAtualizacao">
+        <th mat-header-cell *matHeaderCellDef>Última Atualização</th>
+        <td mat-cell *matCellDef="let estoque" class="data-atualizacao">
+          {{
+            estoque.dataAtualizacao
+              ? (estoque.dataAtualizacao | date : "dd/MM/yyyy HH:mm")
+              : "Não informado"
+          }}
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="[
+          'produto',
+          'filial',
+          'quantidade',
+          'estoqueMinimo',
+          'status',
+          'dataAtualizacao'
+        ]"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: [
+            'produto',
+            'filial',
+            'quantidade',
+            'estoqueMinimo',
+            'status',
+            'dataAtualizacao'
+          ]
+        "
+      ></tr>
+    </table>
+  </div>
+
+  <!-- Estado Vazio -->
+  <div
+    class="empty-state"
+    *ngIf="!isLoading && (!estoques || estoques.length === 0)"
+  >
+    <mat-icon class="empty-icon">assessment</mat-icon>
+    <h3>Nenhum dado encontrado</h3>
+    <p>
+      {{
+        filialSelecionada
+          ? "Nenhum estoque encontrado para a filial selecionada."
+          : "Não há dados de estoque disponíveis no momento."
+      }}
+    </p>
+  </div>
+</div>

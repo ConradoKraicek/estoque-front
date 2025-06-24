@@ -1,3 +1,4 @@
+import { EstoqueRelatorioComponent } from './../relatorio/estoque-relatorio.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -20,9 +21,18 @@ import { Produto } from '../../models/produto.model';
   template: `
     <div class="header">
       <h2>Lista de Produtos</h2>
-      <button mat-raised-button color="primary" routerLink="/produtos/novo">
-        <mat-icon>add</mat-icon> Novo Produto
-      </button>
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          routerLink="/relatorio-estoque"
+        >
+          <mat-icon>description</mat-icon> Imprimir Relatório
+        </button>
+        <button mat-raised-button color="primary" routerLink="/produtos/novo">
+          <mat-icon>add</mat-icon> Novo Produto
+        </button>
+      </div>
     </div>
 
     <table mat-table [dataSource]="produtos" class="mat-elevation-z8">

@@ -1,101 +1,126 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ isEdit ? "Editar" : "Novo" }} Produto</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Nome</mat-label>
-        <input
-          matInput
-          formControlName="nome"
-          required
-          placeholder="Digite seu nome"
-          aria-label="Nome"
-        />
-        <mat-error *ngIf="form.get('nome')?.hasError('required')">
-          Nome é obrigatório
-        </mat-error>
-      </mat-form-field>
+<div class="produto-form-container">
+  <mat-card class="produto-form-card">
+    <div class="form-header">
+      <h1 class="form-title">{{ isEdit ? "Editar" : "Novo" }} Produto</h1>
+      <p class="form-subtitle">
+        {{
+          isEdit
+            ? "Atualize as informações do produto"
+            : "Cadastre um novo produto no estoque"
+        }}
+      </p>
+    </div>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Descrição</mat-label>
-        <textarea
-          matInput
-          formControlName="descricao"
-          rows="3"
-          placeholder="Digite a descrição do produto"
-          aria-label="Descrição"
-          title="Digite a descrição do produto"
-        ></textarea>
-      </mat-form-field>
+    <mat-card-content class="form-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row single">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome do Produto</mat-label>
+            <input
+              matInput
+              formControlName="nome"
+              required
+              placeholder="Digite o nome do produto"
+              aria-label="Nome"
+            />
+            <mat-icon matPrefix>inventory</mat-icon>
+            <mat-error *ngIf="form.get('nome')?.hasError('required')">
+              Nome é obrigatório
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Código de Barras</mat-label>
-        <input
-          matInput
-          formControlName="codigoBarras"
-          placeholder="Digite o código de barras"
-          aria-label="Código de Barras"
-          title="Digite o código de barras do produto"
-        />
-        <mat-error *ngIf="form.get('codigoBarras')?.hasError('required')">
-          Código de Barras é obrigatório
-        </mat-error>
-      </mat-form-field>
+        <div class="form-row single">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descrição</mat-label>
+            <textarea
+              matInput
+              formControlName="descricao"
+              rows="3"
+              placeholder="Digite a descrição do produto"
+              aria-label="Descrição"
+            ></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+          </mat-form-field>
+        </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Preço</mat-label>
-        <input
-          matInput
-          type="number"
-          formControlName="preco"
-          min="0"
-          step="0.01"
-          placeholder="Digite o preço do produto"
-          aria-label="Preço"
-          title="Digite o preço do produto"
-        />
-        <mat-error *ngIf="form.get('preco')?.hasError('required')">
-          Preço é obrigatório
-        </mat-error>
-        <mat-error *ngIf="form.get('preco')?.hasError('min')">
-          Preço deve ser positivo
-        </mat-error>
-      </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Código de Barras</mat-label>
+            <input
+              matInput
+              formControlName="codigoBarras"
+              placeholder="Digite o código de barras"
+              aria-label="Código de Barras"
+            />
+            <mat-icon matPrefix>qr_code</mat-icon>
+            <mat-error *ngIf="form.get('codigoBarras')?.hasError('required')">
+              Código de Barras é obrigatório
+            </mat-error>
+          </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Estoque Mínimo</mat-label>
-        <input
-          matInput
-          type="number"
-          formControlName="estoqueMinimo"
-          min="0"
-          placeholder="Digite o estoque mínimo"
-          aria-label="Estoque Mínimo"
-          title="Digite o estoque mínimo permitido"
-        />
-        <mat-error *ngIf="form.get('estoqueMinimo')?.hasError('required')">
-          Estoque mínimo é obrigatório
-        </mat-error>
-        <mat-error *ngIf="form.get('estoqueMinimo')?.hasError('min')">
-          Deve ser zero ou mais
-        </mat-error>
-      </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Preço</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="preco"
+              min="0"
+              step="0.01"
+              placeholder="0,00"
+              aria-label="Preço"
+            />
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-error *ngIf="form.get('preco')?.hasError('required')">
+              Preço é obrigatório
+            </mat-error>
+            <mat-error *ngIf="form.get('preco')?.hasError('min')">
+              Preço deve ser positivo
+            </mat-error>
+          </mat-form-field>
+        </div>
 
-      <div class="actions">
-        <button mat-raised-button type="button" (click)="cancelar()">
-          Cancelar
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="form.invalid"
-        >
-          {{ isEdit ? "Atualizar" : "Salvar" }}
-        </button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Estoque Mínimo</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="estoqueMinimo"
+              min="0"
+              placeholder="0"
+              aria-label="Estoque Mínimo"
+            />
+            <mat-icon matPrefix>warning</mat-icon>
+            <mat-error *ngIf="form.get('estoqueMinimo')?.hasError('required')">
+              Estoque mínimo é obrigatório
+            </mat-error>
+            <mat-error *ngIf="form.get('estoqueMinimo')?.hasError('min')">
+              Deve ser zero ou mais
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <button
+            mat-stroked-button
+            type="button"
+            class="action-button cancel-button"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="action-button submit-button"
+            [disabled]="form.invalid"
+          >
+            {{ isEdit ? "Atualizar" : "Salvar" }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
