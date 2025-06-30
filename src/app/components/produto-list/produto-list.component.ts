@@ -24,12 +24,19 @@ import { Produto } from '../../models/produto.model';
       <div class="actions">
         <button
           mat-raised-button
-          color="primary"
+          color="accent"
           routerLink="/relatorio-estoque"
         >
           <mat-icon>description</mat-icon> Imprimir Relatório
         </button>
-        <button mat-raised-button color="primary" routerLink="/produtos/novo">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="gerarRelatorioProdutos()"
+        >
+          <mat-icon>picture_as_pdf</mat-icon> Relatório PDF
+        </button>
+        <button mat-raised-button color="accent" routerLink="/produtos/novo">
           <mat-icon>add</mat-icon> Novo Produto
         </button>
       </div>
@@ -132,5 +139,31 @@ export class ProdutoListComponent {
         this.carregarProdutos();
       });
     }
+  }
+
+  gerarRelatorioProdutos() {
+    this.produtoService.gerarRelatorioPdf().subscribe({
+      next: (blob) => {
+        // Criar URL para o blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Criar um link temporário para download
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'relatorio_produtos.pdf';
+
+        // Simular clique no link para iniciar o download
+        document.body.appendChild(link);
+        link.click();
+
+        // Limpar o link e URL
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Erro ao gerar relatório:', error);
+        alert('Erro ao gerar relatório de produtos. Tente novamente.');
+      },
+    });
   }
 }

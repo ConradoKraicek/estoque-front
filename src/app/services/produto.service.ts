@@ -61,4 +61,26 @@ export class ProdutoService {
   salvar(produto: Produto): Observable<Produto> {
     return produto.id ? this.atualizar(produto) : this.criar(produto);
   }
+
+  gerarRelatorioPdf(categoriaId?: number): Observable<Blob> {
+    const params: any = {};
+    if (categoriaId) {
+      params.categoriaId = categoriaId;
+    }
+
+    return this.http
+      .get(`${this.apiUrl}/relatorio`, {
+        params,
+        responseType: 'blob',
+        headers: this.getHeaders(),
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao gerar relatório de produtos:', error);
+          return throwError(
+            () => new Error(`Erro ao gerar relatório: ${error.message}`)
+          );
+        })
+      );
+  }
 }
