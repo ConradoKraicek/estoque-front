@@ -15,7 +15,6 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-row single">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Nome do Produto</mat-label>
             <input
               matInput
               formControlName="nome"
@@ -23,7 +22,6 @@
               placeholder="Digite o nome do produto"
               aria-label="Nome"
             />
-            <mat-icon matPrefix>inventory</mat-icon>
             <mat-error *ngIf="form.get('nome')?.hasError('required')">
               Nome é obrigatório
             </mat-error>
@@ -32,7 +30,6 @@
 
         <div class="form-row single">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Descrição</mat-label>
             <textarea
               matInput
               formControlName="descricao"
@@ -40,27 +37,23 @@
               placeholder="Digite a descrição do produto"
               aria-label="Descrição"
             ></textarea>
-            <mat-icon matPrefix>description</mat-icon>
           </mat-form-field>
         </div>
 
         <div class="form-row">
           <mat-form-field appearance="outline">
-            <mat-label>Código de Barras</mat-label>
             <input
               matInput
               formControlName="codigoBarras"
               placeholder="Digite o código de barras"
               aria-label="Código de Barras"
             />
-            <mat-icon matPrefix>qr_code</mat-icon>
             <mat-error *ngIf="form.get('codigoBarras')?.hasError('required')">
               Código de Barras é obrigatório
             </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Preço</mat-label>
             <input
               matInput
               type="number"
@@ -70,7 +63,6 @@
               placeholder="0,00"
               aria-label="Preço"
             />
-            <mat-icon matPrefix>attach_money</mat-icon>
             <mat-error *ngIf="form.get('preco')?.hasError('required')">
               Preço é obrigatório
             </mat-error>
@@ -82,7 +74,6 @@
 
         <div class="form-row">
           <mat-form-field appearance="outline">
-            <mat-label>Estoque Mínimo</mat-label>
             <input
               matInput
               type="number"
@@ -91,7 +82,6 @@
               placeholder="0"
               aria-label="Estoque Mínimo"
             />
-            <mat-icon matPrefix>warning</mat-icon>
             <mat-error *ngIf="form.get('estoqueMinimo')?.hasError('required')">
               Estoque mínimo é obrigatório
             </mat-error>
