@@ -107,18 +107,6 @@
         </td>
       </ng-container>
 
-      <!-- Coluna Data de Atualização -->
-      <ng-container matColumnDef="dataAtualizacao">
-        <th mat-header-cell *matHeaderCellDef>Última Atualização</th>
-        <td mat-cell *matCellDef="let estoque" class="data-atualizacao">
-          {{
-            estoque.dataAtualizacao
-              ? (estoque.dataAtualizacao | date : "dd/MM/yyyy HH:mm")
-              : "Não informado"
-          }}
-        </td>
-      </ng-container>
-
       <tr
         mat-header-row
         *matHeaderRowDef="[
@@ -126,8 +114,7 @@
           'filial',
           'quantidade',
           'estoqueMinimo',
-          'status',
-          'dataAtualizacao'
+          'status'
         ]"
       ></tr>
       <tr
@@ -139,8 +126,7 @@
             'filial',
             'quantidade',
             'estoqueMinimo',
-            'status',
-            'dataAtualizacao'
+            'status'
           ]
         "
       ></tr>
