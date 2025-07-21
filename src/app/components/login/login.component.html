@@ -9,7 +9,6 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email</mat-label>
             <input
               matInput
               formControlName="email"
@@ -18,7 +17,6 @@
               placeholder="Digite seu email"
               aria-label="Email"
             />
-            <mat-icon matPrefix>email</mat-icon>
             <mat-error *ngIf="form.get('email')?.hasError('required')">
               Email é obrigatório
             </mat-error>
@@ -30,7 +28,6 @@
 
         <div class="form-group">
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Senha</mat-label>
             <input
               matInput
               formControlName="password"
@@ -39,7 +36,6 @@
               placeholder="Digite sua senha"
               aria-label="Senha"
             />
-            <mat-icon matPrefix>lock</mat-icon>
             <mat-error *ngIf="form.get('password')?.hasError('required')">
               Senha é obrigatória
             </mat-error>
